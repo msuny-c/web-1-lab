@@ -1,31 +1,32 @@
-const url = '/fcgi-bin/area.jar'
-
 document.addEventListener("DOMContentLoaded", function() {
 	setInputValidity('y-text', -3, 3);
 	setInputValidity('r-text', 2, 5);
 	setScrollShadow("header", "shadow", 5);
-	setFormListener();
+	setFormListener('#coordinates-form', '/fcgi-bin/area.jar', 'GET');
 });
 
-function setFormListener() {
-	$('#coordinates-form').on('submit', function(event) {
+function setFormListener(form, url, method) {
+	$(form).on('submit', function(event) {
 		event.preventDefault();
 		updateCoordinates();
 		$.ajax({
 			url: url,
-			method: 'GET',
+			method: method,
 			data: $(this).serialize(),
 			success: function (data, _, response) {
 				appendResult(JSON.parse(JSON.stringify(data)), response);
 			},
+			fail: function(xhr, textStatus, errorThrown){
+				alert('Сервер недоступен');
+			}
 		});
 	})
 }
 
 function updateCoordinates() {
-	let x = document.getElementById("x-select").value;
-	let y = document.getElementById("y-text").value;
-	let r = document.getElementById('r-text').value;
+	let x = parseFloat(document.getElementById("x-select").value);
+	let y = parseFloat(document.getElementById("y-text").value);
+	let r = parseFloat(document.getElementById('r-text').value);
 	let dot = document.getElementById("point");
 	dot.setAttribute("cx", 150 + x * 100 / r)
 	dot.setAttribute("cy", 150 - y * 100 / r)
@@ -65,7 +66,7 @@ function appendResult(data, response) {
 	let exec_time_header = response.getResponseHeader("fastcgi-exec-time")
 	let tbody = document.querySelector('.result-table').querySelector('tbody');
 	let x = document.createTextNode(parseFloat(data.x));
-	let y = document.createTextNode(parseFloat(data.y)); 
+	let y = document.createTextNode(parseFloat(data.y));
 	let r = document.createTextNode(parseFloat(data.r));
 	let hitElement = document.createElement('span');
 	switch (data.hit) {
@@ -78,8 +79,9 @@ function appendResult(data, response) {
 			hitElement.classList.add('fail-hit');
 			break;
 	}
+	const nano = 1_000_000_000
 	let date = document.createTextNode(new Date(date_header).toLocaleString());
-	let exec_time = document.createTextNode(exec_time_header + ' ns');
+	let exec_time = document.createTextNode(exec_time_header / nano + ' с.');
 	let counter = document.createTextNode('');
 	const rowData = [counter, x, y, r, hitElement, date, exec_time]
 	let row = tbody.insertRow();

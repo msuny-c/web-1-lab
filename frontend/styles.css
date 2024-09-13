@@ -39,7 +39,7 @@ table {
 	padding: 0px;
 }
 
-.coordinates-form-table td {
+.coordinates-form-table > td {
 	padding: 0px;
 	padding-bottom: 5px;
 }
