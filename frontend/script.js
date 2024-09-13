@@ -52,9 +52,9 @@ function setInputValidity(input_id, min, max) {
 	let name = input.getAttribute('name').toUpperCase()
 	input.addEventListener('input', () => {
 		if (!isFinite(input.value)) {
-			input.setCustomValidity(name + ' должен быть числом!')
+			input.setCustomValidity(`${name} должен быть числом!`)
 		} else if (input.value <= min || input.value >= max) {
-			input.setCustomValidity(name + ' должен быть в пределах от ' + min + ' до ' + max + ' не включительно!');
+			input.setCustomValidity(`${name} должен быть в пределах от ${min} до ${max} не включительно!`);
 		} else {
 			input.setCustomValidity('');
 		}
