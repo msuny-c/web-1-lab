@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	setInputValidity('r-text', 2, 5);
 	setScrollShadow("header", "shadow", 5);
 	setFormListener('#coordinates-form', '/fcgi-bin/area.jar', 'GET');
+	loadTableData('.result-table');
 });
 
 function setFormListener(form, url, method) {
@@ -21,6 +22,21 @@ function setFormListener(form, url, method) {
 			}
 		});
 	})
+}
+
+function loadTableData(table) {
+	let storedData = localStorage.getItem('tableData');
+	if (storedData) {
+		let tableData = JSON.parse(storedData);
+		let tbody = document.querySelector(table).querySelector('tbody');
+		tableData.forEach(rowData => {
+			let row = tbody.insertRow();
+			rowData.forEach(cellData => {
+				let cell = row.insertCell();
+				cell.innerHTML = cellData;
+			});
+		});
+	}
 }
 
 function updateCoordinates() {
@@ -89,4 +105,13 @@ function appendResult(data, response) {
 		let cell = row.insertCell();
 		cell.appendChild(element);
 	}
+	let tableData = [];
+	document.querySelectorAll('.result-table tbody tr').forEach(row => {
+		let rowData = [];
+		row.querySelectorAll('td').forEach(cell => {
+			rowData.push(cell.innerHTML);
+		});
+		tableData.push(rowData);
+	});
+	localStorage.setItem('tableData', JSON.stringify(tableData));
 }

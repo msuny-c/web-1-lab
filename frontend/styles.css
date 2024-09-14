@@ -7,6 +7,10 @@ table {
 	margin: auto;
 }
 
+td, th {
+	text-align: center;
+}
+
 .layout-table {
 	width: 100%;
 	max-width: 1024px;
@@ -45,7 +49,6 @@ table {
 }
 
 .coordinates-form-cell {
-	text-align: center;
 	width: 350px;
 }
 
@@ -63,13 +66,11 @@ table {
 .result-table thead tr {
 	background-color: #d2dcdc;
 	color: #2c4942;
-	text-align: left;
 }
 
 .result-table th,
 .result-table td {
 	font-weight: normal;
-	text-align: center;
 	padding: 10px 12px;
 }
 
@@ -82,11 +83,11 @@ table {
 }
 
 .result-table tbody tr:last-of-type {
-	border-bottom: 3px solid #00da72
+	border-bottom: 3px solid #00da72;
 }
 
 .success-hit {
-	background-color: rgb(0, 218, 114);;
+	background-color: rgb(0, 218, 114);
 	color: #ffffff;
 }
 
@@ -122,16 +123,12 @@ header {
 
 .variant {
 	display: inline-block;
-	border-bottom: 5px solid rgba(0, 218, 114, .5);
+	border-bottom: 5px solid rgba(0, 218, 114, 0.5);
 	line-height: 0.1em;
 }
 
 .shadow {
-	box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, .08);
-}
-
-td {
-	text-align: center;
+	box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.08);
 }
 
 input[type='text'] {
@@ -148,7 +145,8 @@ input[type='text'] {
 	box-sizing: border-box;
 }
 
-input[type='text']:focus, select:focus {
+input[type='text']:focus,
+select:focus {
 	outline: none;
 }
 
@@ -183,7 +181,7 @@ button {
 	color: #2c4942;
 	cursor: pointer;
 	font: normal 18px / 1.14 'Styrene B LC', 'Helvetica Neue', arial, sans-serif;
-	transition: color .3s, background .3s, opacity .3s, border-color .3s
+	transition: color 0.3s, background 0.3s, opacity 0.3s, border-color 0.3s;
 }
 
 button:hover {
